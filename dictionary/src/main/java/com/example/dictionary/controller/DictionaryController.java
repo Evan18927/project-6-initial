@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class DictionaryController {
 
@@ -40,18 +42,42 @@ public class DictionaryController {
         return entry;
     }
 
-    @GetMapping("/getWord/{word}")
-    public Entry getWord(@PathVariable("word") String word) throws WordNotFoundException {
+    @GetMapping("/getWordsStargingWith/{value}")
+    public List<Entry> getWordsStargingWith(@PathVariable("value") String value) throws WordNotFoundException {
 
         StopWatch sw = new StopWatch();
         sw.start();
-        Entry entry =  this.dictionaryService.getWord(word);
+        List<Entry> entry =  this.dictionaryService.getWordsStartingWith(value);
         sw.stop();
 
         long nanoSeconds = sw.getLastTaskTimeNanos();
-        String message = new StringBuilder().append("Retrieved entry for [")
-                .append(word)
-                .append("] in ")
+        String message = new StringBuilder().append("Retrieved entry for words starting with [")
+                .append(value)
+                .append("] containing ")
+                .append(entry.size())
+                .append(" entries in ")
+                .append(nanoSeconds / 1000000.0)
+                .append("ms")
+                .toString();
+
+        logger.info(message);
+        return entry;
+    }
+
+    @GetMapping("/getWordsThatContain/{value}")
+    public List<Entry> getWordsThatContain(@PathVariable("value") String value) throws WordNotFoundException {
+
+        StopWatch sw = new StopWatch();
+        sw.start();
+        List<Entry> entry =  this.dictionaryService.getWordsThatContain(value);
+        sw.stop();
+
+        long nanoSeconds = sw.getLastTaskTimeNanos();
+        String message = new StringBuilder().append("Retrieved entry for words that contain [")
+                .append(value)
+                .append("] containing ")
+                .append(entry.size())
+                .append(" entries in ")
                 .append(nanoSeconds / 1000000.0)
                 .append("ms")
                 .toString();
