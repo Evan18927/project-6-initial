@@ -58,7 +58,6 @@ public class AggregatorController {
         logger.info(message);
 
         return entries;
-
     }
 
     @GetMapping("/getWordsThatContainSuccessiveLettersAndContains/{chars}")
@@ -83,6 +82,11 @@ public class AggregatorController {
         logger.info(message);
 
         return entries;
+    }
 
+    @GetMapping("/getAllPalindromes")
+    public List<Entry> getAllPalindromes() {
+        logger.info("Request received to get all palindromes");
+        return aggregatorService.getAllPalindromes();
     }
 }

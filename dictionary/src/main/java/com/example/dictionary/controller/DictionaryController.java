@@ -27,7 +27,7 @@ public class DictionaryController {
 
         StopWatch sw = new StopWatch();
         sw.start();
-        Entry entry =  this.dictionaryService.getWord(word);
+        Entry entry = this.dictionaryService.getWord(word);
         sw.stop();
 
         long nanoSeconds = sw.getLastTaskTimeNanos();
@@ -47,11 +47,33 @@ public class DictionaryController {
 
         StopWatch sw = new StopWatch();
         sw.start();
-        List<Entry> entry =  this.dictionaryService.getWordsStartingWith(value);
+        List<Entry> entry = this.dictionaryService.getWordsStartingWith(value);
         sw.stop();
 
         long nanoSeconds = sw.getLastTaskTimeNanos();
         String message = new StringBuilder().append("Retrieved entry for words starting with [")
+                .append(value)
+                .append("] containing ")
+                .append(entry.size())
+                .append(" entries in ")
+                .append(nanoSeconds / 1000000.0)
+                .append("ms")
+                .toString();
+
+        logger.info(message);
+        return entry;
+    }
+
+    @GetMapping("/getWordsEndingWith/{value}")
+    public List<Entry> getWordsEndingWith(@PathVariable("value") String value) {
+
+        StopWatch sw = new StopWatch();
+        sw.start();
+        List<Entry> entry = this.dictionaryService.getWordsEndingWith(value);
+        sw.stop();
+
+        long nanoSeconds = sw.getLastTaskTimeNanos();
+        String message = new StringBuilder().append("Retrieved entry for words ending with [")
                 .append(value)
                 .append("] containing ")
                 .append(entry.size())
@@ -69,7 +91,7 @@ public class DictionaryController {
 
         StopWatch sw = new StopWatch();
         sw.start();
-        List<Entry> entry =  this.dictionaryService.getWordsThatContain(value);
+        List<Entry> entry = this.dictionaryService.getWordsThatContain(value);
         sw.stop();
 
         long nanoSeconds = sw.getLastTaskTimeNanos();
@@ -91,7 +113,7 @@ public class DictionaryController {
 
         StopWatch sw = new StopWatch();
         sw.start();
-        List<Entry> entry =  this.dictionaryService.getWordsThatContainConsecutiveDoubleLetters();
+        List<Entry> entry = this.dictionaryService.getWordsThatContainConsecutiveDoubleLetters();
         sw.stop();
 
         long nanoSeconds = sw.getLastTaskTimeNanos();

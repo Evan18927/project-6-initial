@@ -27,56 +27,50 @@ public class AggregatorRestClient {
         return result;
     }
 
-    /**
-     * Get Words Starting With
-     *
-     * @param chars
-     * @return
-     */
     public List<Entry> getWordsStartingWith(String chars) {
 
-        // Get URL
         String uri = "http://localhost:9091/getWordsStartingWith/" + chars;
 
-        // Call endpoint
         ResponseEntity<Entry[]> result = restTemplate.getForEntity(uri, Entry[].class);
 
-        // Convert body to array
         Entry[] entryArray = result.getBody();
 
-        // Return list of Entries
+        return Arrays.stream(entryArray)
+                .collect(Collectors.toList());
+    }
+
+    public List<Entry> getWordsEndingWith(String chars) {
+
+        String uri = "http://localhost:9091/getWordsEndingWith/" + chars;
+
+        ResponseEntity<Entry[]> result = restTemplate.getForEntity(uri, Entry[].class);
+
+        Entry[] entryArray = result.getBody();
+
         return Arrays.stream(entryArray)
                 .collect(Collectors.toList());
     }
 
     public List<Entry> getWordsThatContain(String chars) {
 
-        // Get URL
         String uri = "http://localhost:9091/getWordsThatContain/" + chars;
 
-        // Call endpoint
         ResponseEntity<Entry[]> result = restTemplate.getForEntity(uri, Entry[].class);
 
-        // Convert body to array
         Entry[] entryArray = result.getBody();
 
-        // Return list of Entries
         return Arrays.stream(entryArray)
                 .collect(Collectors.toList());
     }
 
     public List<Entry> getWordsThatContainConsecutiveLetters() {
 
-        // Get URL
         String uri = "http://localhost:9091/getWordsThatContainConsecutiveLetters";
 
-        // Call endpoint
         ResponseEntity<Entry[]> result = restTemplate.getForEntity(uri, Entry[].class);
 
-        // Convert body to array
         Entry[] entryArray = result.getBody();
 
-        // Return list of Entries
         return Arrays.stream(entryArray)
                 .collect(Collectors.toList());
     }
